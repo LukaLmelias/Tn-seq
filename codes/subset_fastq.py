@@ -33,7 +33,7 @@ def subset_fastq_files(input_directory, output_directory, subset_size):
 def main():
     input_directory = "../raw_data"  # Define your input directory path
     output_directory = "../subset_fastq"  # Define your output directory path
-    subset_size = 400  # how many lines to pick
+    subset_size = 4000  # how many lines to pick
 
     # run the function to subset
     subset_fastq_files(input_directory, output_directory, subset_size)
