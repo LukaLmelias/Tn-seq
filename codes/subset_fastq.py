@@ -14,7 +14,7 @@ def subset_fastq_files(input_directory, output_directory, subset_size):
             output_file = os.path.join(output_directory, filename)
 
             # Create a subset of the gzipped FASTQ file
-            with gzip.open(input_file, "rt") as input_handle, open(output_file, "w") as output_handle:
+            with gzip.open(input_file, "rt") as input_handle, gzip.open(output_file, "wt") as output_handle:
                 records = []
                 record_count = 0
 
@@ -30,15 +30,10 @@ def subset_fastq_files(input_directory, output_directory, subset_size):
 
     print("Subset FASTQ files have been created.")
 
-
 def main():
-
-    # define input directory (fixed as current directory)
-    input_directory = os.getcwd()
-
-    output_directory = os.path.join(input_directory, "subset_fastq") # new directory to store the subset
-
-    subset_size = 400 # how many lines to pick
+    input_directory = "../raw_data"  # Define your input directory path
+    output_directory = "../subset_fastq"  # Define your output directory path
+    subset_size = 400  # how many lines to pick
 
     # run the function to subset
     subset_fastq_files(input_directory, output_directory, subset_size)
