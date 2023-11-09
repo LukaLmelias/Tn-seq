@@ -30,11 +30,11 @@
 
 
 
-python src/transit.py resampling \
-    /mnt/c/Users/lmeli/Desktop/Bioinformatics_projects/Tn-seq/test/GTAC-139491-MA-1.HNL3JDSX5_TGATTCACCT-GAGTTCGAAC_L002_R2.wig \
-    /mnt/c/Users/lmeli/Desktop/Bioinformatics_projects/Tn-seq/test/GTAC-139491-MA-2.HNL3JDSX5_CTCACGGTAA-GAGTTCGAAC_L002_R2.wig \
-    /mnt/c/Users/lmeli/Desktop/Bioinformatics_projects/Tn-seq/raw_data/prot_tables/reference.prot_table \
-    /mnt/c/Users/lmeli/Desktop/Bioinformatics_projects/Tn-seq/test/resampling_conditionally_essential_genes
+# python src/transit.py resampling \
+#     /mnt/c/Users/lmeli/Desktop/Bioinformatics_projects/Tn-seq/test/GTAC-139491-MA-1.HNL3JDSX5_TGATTCACCT-GAGTTCGAAC_L002_R2.wig \
+#     /mnt/c/Users/lmeli/Desktop/Bioinformatics_projects/Tn-seq/test/GTAC-139491-MA-2.HNL3JDSX5_CTCACGGTAA-GAGTTCGAAC_L002_R2.wig \
+#     /mnt/c/Users/lmeli/Desktop/Bioinformatics_projects/Tn-seq/raw_data/prot_tables/reference.prot_table \
+#     /mnt/c/Users/lmeli/Desktop/Bioinformatics_projects/Tn-seq/test/resampling_conditionally_essential_genes
 
 
 

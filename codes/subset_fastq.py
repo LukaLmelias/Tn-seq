@@ -31,7 +31,7 @@ def subset_fastq_files(input_directory, output_directory, subset_size):
     print("Subset FASTQ files have been created.")
 
 def main():
-    input_directory = "../raw_data"  # Define your input directory path
+    input_directory = "../raw_data/data"  # Define your input directory path
     output_directory = "../subset_fastq"  # Define your output directory path
     subset_size = 4000  # how many lines to pick
 
