@@ -1,0 +1,10 @@
+{
+    "raw_data_path": "/mnt/c/Users/lmeli/Desktop/Bioinformatics_projects/Tn-seq/subset_fastq/",
+    "reference": "/mnt/c/Users/lmeli/Desktop/Bioinformatics_projects/Tn-seq/raw_data/reference.fasta",
+    "bwa_path": "/mnt/c/Users/lmeli/Desktop/Bioinformatics_projects/Tn-seq/bwa-0.7.17",
+    "read1_primer": "CCTAGGCGGCCTTAATTAAAGATGTGTATAAGAG",
+    "read2_primer": "GGGGGGGGGGGGGGGG",
+    "protocol": "Tn5",
+    "replicon_id": "auto"
+
+}
