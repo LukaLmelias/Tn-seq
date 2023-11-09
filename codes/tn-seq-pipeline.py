@@ -15,6 +15,25 @@ def get_args(config_file_path):
         config = json.load(config_file)
     return config
 
+
+def get_primer(read1_primer,read2_primer,file_path):
+    """
+    assigns primer to read1_primer if R1 and primer to read2_primer if R2
+    """
+    
+    # Check if R2 or R1
+    R1_pattern = r'_R1\.'
+    R2_pattern =r'_R2\.'
+    
+    primer = ""
+    if re.search(R1_pattern, file_path):
+        primer = read1_primer
+    
+    elif re.search(R2_pattern, file_path):
+        primer = read2_primer
+    
+    return primer
+
 def find_sequence_files(raw_data_directory):
     """
     raw_data_directory: path to the directory containing raw data
@@ -67,18 +86,8 @@ def run_tpp(raw_data_directory, bwa_path, reference, read1_primer,
     # run tpp for each file:
     for seq in sequence_files:
 
-    
 
-        # Check if R2 or R1
-        R1_pattern = r'_R1\.'
-        R2_pattern =r'_R2\.'
-        
-        primer = ""
-        if re.search(R1_pattern, seq):
-            primer = read1_primer
-        
-        elif re.search(R2_pattern, seq):
-            primer = read2_primer
+        primer = get_primer(read1_primer,read2_primer,seq)
 
         seq_base_name = seq.split("/")[-1].split("_R")[0]
         outputfile = os.path.join(tpp_output_dir, seq_base_name)
@@ -91,11 +100,9 @@ def run_tpp(raw_data_directory, bwa_path, reference, read1_primer,
         print("\n",cmd,"\n")
 
         #Run the command and capture the output
-        output = subprocess.check_output(cmd, shell=True)
+        # output = subprocess.check_output(cmd, shell=True)
 
-                
-        # Print the output
-        print("\n",output.decode('utf-8'),"\n")
+       
 
 
 def main():
@@ -104,26 +111,7 @@ def main():
     #raw data directory
     parser.add_argument("-c", "--config_file_path", help="The directory to search for sequence files")
 
-    # #path to reference genome
-    # parser.add_argument("-r",  "--reference", help="path to reference genome")
-
-    # # path to bwa excutable
-    # parser.add_argument("-b", "--bwa_path", help="path to bwa excutable")
-
-    # # primer1 sequence
-    # parser.add_argument("-p1", "--read1_primer", help="primer sequence for read one, also refered as prefix in tpp")
-
-    # # primer2 sequence
-    # parser.add_argument("-p2",  "--read2_primer", help="primer sequence for read two, also refered as prefix in tpp")
-
-    
-    # # protocol
-    # parser.add_argument("-prot",  "--protocol", help="protocol; one of Tn5, Sassetti, Mme1; default is Sassetti")
-
-
-    # #extract the arguments   
-    
-
+    # #extract the arguments     
 
     args = parser.parse_args()
 
