@@ -41,8 +41,7 @@ def find_sequence_files(raw_data_directory):
     returns a list containing absolute path of fastq, fastq.gz or fasta files
     """
 
-    sequence_files = []
-    
+    sequence_files = []    
 
     for file in os.listdir(raw_data_directory):
     
@@ -100,7 +99,57 @@ def run_tpp(raw_data_directory, bwa_path, reference, read1_primer,
         print("\n",cmd,"\n")
 
         #Run the command and capture the output
-        # output = subprocess.check_output(cmd, shell=True)
+        #subprocess.check_output(cmd, shell=True)
+    return tpp_output_dir
+
+def gff3_to_prot_table(gff3_path):
+    """
+    Convert gff3 to prot_table
+
+    writes to file a new prot_table to same directory as the reference directory
+    """
+    table_name = gff3_path.split(".gff3")[0]
+    prot_table = f"{table_name}.prot_table"
+
+    print("\n ********** CONVERTING gff3 to PROT_TABLE **********\n")
+    cmd = f"python src/transit.py convert gff_to_prot_table {gff3_path} {prot_table}"
+
+    print(cmd)
+    #subprocess.check_output(cmd, shell=True)
+
+    return prot_table
+
+def run_resampling():
+    """
+    runs the resampling step of Tn-seq
+
+
+    """
+
+
+    return None
+
+
+def combine_wigs(tpp_results_dir_path,prot_table):
+    """
+    searches the wig files in the tpp_results directory 
+
+    runs the transit combine wigs command
+
+    returns the path of the created combined wig file.
+    """
+    
+
+    print("\n ********** SEARCHING FOR WIG FILES **********\n")
+    wigs = [] # to populate with wigs
+    for file in os.listdir(tpp_results_dir_path):
+        if file.endswith(".wig"):
+            
+            wigs.append(os.path.join(tpp_results_dir_path, file))
+    
+    print(wigs)
+        
+
 
        
 
@@ -123,30 +172,40 @@ def main():
     for key, value in tpp_params.items():
         print(f"{key}:\t{value}")
 
-    
+    # tpp params
     directory_path = tpp_params["raw_data_path"]
-
     reference = tpp_params["reference"]
-
     bwa_path = tpp_params["bwa_path"]
-
     primer1 = tpp_params["read1_primer"]
     primer2 = tpp_params["read2_primer"]
     protocol = tpp_params["protocol"]
     replicon_ids = tpp_params["replicon_id"]
+
+    # gff3 to prot table params
+    gff3 = tpp_params["gff3"]
+
+
 
 
     # ################################## Call the functions
 
 
     # 2. run tpp
-    run_tpp(raw_data_directory=directory_path,
+    tpp_results_path = run_tpp(raw_data_directory=directory_path,
     bwa_path = bwa_path,
     reference = reference,
     read1_primer = primer1,    
     read2_primer = primer2,    
-    protocol = protocol
+    protocol = protocol,
+    replicon_ids = replicon_ids
      )
+
+    # convert gff3 to prot_table
+    prot_table_path = gff3_to_prot_table(gff3)
+
+    # combine the wig files
+    combine_wigs(tpp_results_path,prot_table_path)
+
 
 
 

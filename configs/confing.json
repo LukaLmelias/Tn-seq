@@ -5,6 +5,7 @@
     "read1_primer": "CCTAGGCGGCCTTAATTAAAGATGTGTATAAGAG",
     "read2_primer": "GGGGGGGGGGGGGGGG",
     "protocol": "Tn5",
-    "replicon_id": "auto"
+    "replicon_id": "auto",
+    "gff3": "/mnt/c/Users/lmeli/Desktop/Bioinformatics_projects/Tn-seq/raw_data/gff3/reference.gff3"
 
 }
