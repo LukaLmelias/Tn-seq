@@ -99,7 +99,7 @@ def run_tpp(raw_data_directory, bwa_path, reference, read1_primer,
         print("\n",cmd,"\n")
 
         #Run the command and capture the output
-        #subprocess.check_output(cmd, shell=True)
+        subprocess.check_output(cmd, shell=True)
     return tpp_output_dir
 
 def gff3_to_prot_table(gff3_path):
@@ -115,7 +115,7 @@ def gff3_to_prot_table(gff3_path):
     cmd = f"python src/transit.py convert gff_to_prot_table {gff3_path} {prot_table}"
 
     print(cmd)
-    #subprocess.check_output(cmd, shell=True)
+    subprocess.check_output(cmd, shell=True)
 
     return prot_table
 
@@ -123,18 +123,19 @@ def get_wigs_per_condition(tpp_results_dir_path, group1, group2):
     """
     looks for wig files and separates them according to the treatment/control groups
 
-    returns two list: wigs in group one and wigs in group2
+    returns two lists: wigs in group one and wigs in group2
     """
-    wigs = get_wigs(tpp_results_dir_path)
-    group1 = group1#["MA-1", "MA-2", "MA-3", "MA-4"]
-    group2 = group2#["MA-5", "MA-6", "MA-7", "MA-8"]
-
+    wigs = get_wigs(tpp_results_dir_path)    
+    wigs1 = []
+    wigs2 = []
     for wig in wigs:
         for g1, g2 in zip(group1,group2):
             if g1 in wig:
-                group1.append(wig)
+                wigs1.append(wig)
             elif g2 in wig:
-                group2.append(wig)
+                wigs2.append(wig)
+    
+    return wigs1,wigs2 
 
 
 
@@ -145,17 +146,22 @@ def run_resampling(tpp_results_dir_path,prot_table,group1, group2):
 
     """
     #python3 transit.py resampling <comma-separated .wig control files> <comma-separated .wig experimental files> <annotation .prot_table or GFF3> <output file> [Optional Arguments]
-    # wigs = get_wigs(tpp_results_dir_path)
-    # group1 = ["MA-1", "MA-2", "MA-3", "MA-4"]
-    # group2 = ["MA-5", "MA-6", "MA-7", "MA-8"]
-
-    # for wig in wigs:
-    #     for g1, g2 in zip(group1,group2):
-    #         if g1 in wig:
-    #             group1.append(wig)
-    #         elif g2 in wig:
-    #             group2.append(wig)
+    
+    
     wigs1,wigs2 = get_wigs_per_condition(tpp_results_dir_path,group1, group2)
+    
+    print("\n ********** RUNNING RESAMPLING **********\n")
+    wigs1_joined, wigs2_joined = ",".join(wigs1), ",".join(wigs2)
+
+    resampling_output_file = os.path.join(tpp_results_dir_path,"resampling_conditionally_essential_genes.txt") 
+    prot_table = "/mnt/c/Users/lmeli/Desktop/Bioinformatics_projects/Tn-seq/raw_data/prot_tables/reference.prot_table"
+    
+
+    cmd = f"python src/transit.py resampling { wigs1_joined} { wigs2_joined} {prot_table} {resampling_output_file}"
+    
+    print(cmd)
+    subprocess.check_output(cmd, shell=True)
+    
 
     
 
@@ -190,16 +196,17 @@ def combine_wigs(tpp_results_dir_path,prot_table):
     wigs = get_wigs(tpp_results_dir_path)
 
     print("\n ********** COMBINING WIGS **********\n")
-    wigs_joined =  ','.join(wigs)
+    wigs_joined =  ', '.join(wigs)
     output_wig = os.path.join(tpp_results_dir_path, "combined_wig.txt")
     
 
     cmd = f"python src/transit.py export combined_wig {wigs_joined} {prot_table} {output_wig}"
     
-
+    print(cmd)
     #subprocess.check_output(cmd, shell=True)
     
-    print(cmd)
+    
+    return None
     
 
 

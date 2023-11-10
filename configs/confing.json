@@ -1,5 +1,5 @@
 {
-    "raw_data_path": "/mnt/c/Users/lmeli/Desktop/Bioinformatics_projects/Tn-seq/subset_fastq/",
+    "raw_data_path": "/mnt/c/Users/lmeli/Desktop/Bioinformatics_projects/Tn-seq/raw_data/data/",
     "reference": "/mnt/c/Users/lmeli/Desktop/Bioinformatics_projects/Tn-seq/raw_data/reference.fasta",
     "bwa_path": "/mnt/c/Users/lmeli/Desktop/Bioinformatics_projects/Tn-seq/bwa-0.7.17",
     "read1_primer": "CCTAGGCGGCCTTAATTAAAGATGTGTATAAGAG",
@@ -8,6 +8,6 @@
     "replicon_id": "auto",
     "gff3": "/mnt/c/Users/lmeli/Desktop/Bioinformatics_projects/Tn-seq/raw_data/gff3/reference.gff3",
     "condition1":["MA-1", "MA-2", "MA-3", "MA-4"],
-    "condition2":["MA-1", "MA-2", "MA-3", "MA-4"]
+    "condition2":["MA-5", "MA-6", "MA-7", "MA-8"]
 
 }
