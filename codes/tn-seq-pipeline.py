@@ -85,7 +85,6 @@ def run_tpp(raw_data_directory, bwa_path, reference, read1_primer,
     # run tpp for each file:
     for seq in sequence_files:
 
-
         primer = get_primer(read1_primer,read2_primer,seq)
 
         seq_base_name = seq.split("/")[-1].split("_R")[0]
@@ -100,6 +99,10 @@ def run_tpp(raw_data_directory, bwa_path, reference, read1_primer,
 
         #Run the command and capture the output
         subprocess.check_output(cmd, shell=True)
+        # delete some uncessarryb tpp output
+        delete_notneeded_outputs(raw_data_directory,".reads1")
+        delete_notneeded_outputs(raw_data_directory,".trimmed1_failed_trim")
+
     return tpp_output_dir
 
 def gff3_to_prot_table(gff3_path):
@@ -179,6 +182,22 @@ def get_wigs(tpp_results_dir_path):
             wigs.append(os.path.join(tpp_results_dir_path, file))
     
     return wigs
+
+def delete_notneeded_outputs(raw_data_path,file_ending):
+    """
+    Disk management guys!
+
+    remove any specified output of tpp
+    """
+
+    tpp_output_dir = os.path.join(raw_data_path, "tpp_results")
+    
+    for file in os.listdir(tpp_output_dir):
+        #print(file)
+        if file.endswith(file_ending):
+            print("Deleting:", file)
+            os.remove(os.path.join(tpp_output_dir,file))
+    return None
     
 
 
@@ -252,23 +271,25 @@ def main():
 
 
     # 2. run tpp
-    tpp_results_path = run_tpp(raw_data_directory=directory_path,
-    bwa_path = bwa_path,
-    reference = reference,
-    read1_primer = primer1,    
-    read2_primer = primer2,    
-    protocol = protocol,
-    replicon_ids = replicon_ids
-     )
+    # tpp_results_path = run_tpp(raw_data_directory=directory_path,
+    # bwa_path = bwa_path,
+    # reference = reference,
+    # read1_primer = primer1,    
+    # read2_primer = primer2,    
+    # protocol = protocol,
+    # replicon_ids = replicon_ids
+    #  )
 
+    
     # convert gff3 to prot_table
-    prot_table_path = gff3_to_prot_table(gff3)
+    #prot_table_path = gff3_to_prot_table(gff3)
 
     # combine the wig files
     # combine_wigs(tpp_results_path,prot_table_path)
 
     # run resampling
-    run_resampling(tpp_results_path,prot_table_path,group1, group2)
+    #run_resampling(tpp_results_path,prot_table_path,group1, group2)
+
 
 
 
